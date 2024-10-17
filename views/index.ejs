@@ -3,16 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather Wise
-    </title>
+    <title>Weather Wise</title>
     <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
     <nav> 
         <div class="nav-container">
             <div class="left roboto-condensed-HFont">
-                <a href="#">Weather Wise
-                </a>
+                <a href="#">Weather Wise</a>
             </div>
             <div class="tabs" id="navLinks">
                 <ul class="container roboto-condensed-HFont" type="none">
@@ -30,24 +28,21 @@
     </nav>
 
     <div class="grid-container">
-        <div class="temperature"> 35.5°C</div>
-        <div class="city">Vile Parle(W), Mumbai</div>
-        <div class="feels-temp"><div class="digit">37.5°C</div>  <p>Feels like</p></div>
-        
-        <div class="humidity"><div class="digit">71%</div>  <p>Humidity</p></div>
-        <div class="wind-speed"><div class="digit">2.6 m/s </div> <p>Wind-speed</p></div>
-        <div class="sunset-sunrise">
-            <p><img src="/images/sunrise-svgrepo-com.svg"> Sunrise Time - 06:32</p> 
-            <p><img src="/images/sunset-svgrepo-com.svg"> Sunset Time - 18:16</p>
-        </div>
-        
-        <div class="max-temp"><div class="digit">37°C</div>  <p>Maximum Temperature today</p></div>
-        
-        <div class="item-precipitation">
-            <p>0mm - 20%</p>
-            <p>0mm - 20%</p>
-            <p>0mm - 20%</p>
-        </div>
+        <% if (temperature) { %>
+            <div class="temperature"><%= temperature %>°C</div>
+            <div class="city"><%= cityName %></div>
+            <div class="feels-temp"><div class="digit"><%= feelsLike %>°C</div> <p>Feels like</p></div>
+            <div class="humidity"><div class="digit"><%= humidity %>%</div> <p>Humidity</p></div>
+            <div class="wind-speed"><div class="digit"><%= windSpeed %> m/s</div> <p>Wind-speed</p></div>
+            <div class="sunset-sunrise">
+                <p><img src="/images/sunrise-svgrepo-com.svg"> Sunrise Time - <%= sunriseTime %></p> 
+                <p><img src="/images/sunset-svgrepo-com.svg"> Sunset Time - <%= sunsetTime %></p>
+            </div>
+            <div class="max-temp"><div class="digit"><%= maxTemp %>°C</div> <p>Maximum Temperature today</p></div>
+            <div class="description"><p>Weather: <%= description %></p></div>
+        <% } else { %>
+            <p>Weather data unavailable. Please try again.</p>
+        <% } %>
     </div>
 </body>
 </html>
