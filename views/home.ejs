@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Wise
     </title>
-    <link rel="stylesheet" href="/public/styles/style.css">
+    <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body class="home-body">
     <nav> 
@@ -16,9 +16,9 @@
             </div>
             <div class="tabs" id="navLinks">
                 <ul class="container roboto-condensed-HFont" type="none">
-                    <li><a href="#"><img src="/public/images/home-svgrepo-com.svg">Home</a></li>
-                    <li><a href="#"><img src="/public/images/information-circle-solid-svgrepo-com.svg"> About</a></li>
-                    <li><a href="#"><img src="/public/images/discussion-svgrepo-com.svg">Forum</a></li>
+                    <li><a href="#"><img src="/images/home-svgrepo-com.svg">Home</a></li>
+                    <li><a href="#"><img src="/images/information-circle-solid-svgrepo-com.svg"> About</a></li>
+                    <li><a href="#"><img src="/images/discussion-svgrepo-com.svg">Forum</a></li>
                 </ul>
             </div>
             <div class="hamburger" id="hamburger">
@@ -29,10 +29,10 @@
         </div>
     </nav>
     <div class="search-back">
-        <form id="weather-search-form" action="/weather" method="get">
+        <form id="weather-search-form" action="/weather" method="post">
             <label for="search">
                 <h1>Curious About The Weather? Search your city!</h1>
-                <input type="text" id="search" placeholder="Enter the name of the city" required>
+                <input type="text" id="search" name="city" placeholder="Enter the name of the city" required>
                 <button type="submit">Search</button>
             </label>
         </form>              

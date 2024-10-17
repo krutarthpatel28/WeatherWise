@@ -2,10 +2,11 @@
 
 @font-face {
     font-family: 'DINNextLTPro-Condensed';
-    src: url('/public/fonts/fonnts.com-DINNextLTPro-Condensed-1.ttf') format('truetype');
+    src: url('/fonts/fonnts.com-DINNextLTPro-Condensed-1.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
+
 
 :root{
     --sunny_color: #f7dc6f;
@@ -17,7 +18,7 @@
 }
 
 .home-body{
-    background-image: url(/public/images/Sunny.png); 
+    background-image: url('/images/Sunny.png'); 
     /* here will the the image given by parshva; */
 }
 
@@ -82,7 +83,7 @@ html, body {
 }
 
 body {
-    background-image: url('/public/images/Windy.png');
+    background-image: url('/images/Windy.png');
     background-size: cover;   
     background-position: center;   
     background-repeat: repeat-y;    
