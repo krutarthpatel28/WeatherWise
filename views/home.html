@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WeatherWeb</title>
+    <title>Weather Wise
+    </title>
     <link rel="stylesheet" href="/public/styles/style.css">
 </head>
-<body>
+<body class="home-body">
     <nav> 
         <div class="nav-container">
             <div class="left roboto-condensed-HFont">
-                <a href="#">Logo</a>
+                <a href="#">Weather Wise
+                </a>
             </div>
             <div class="tabs" id="navLinks">
                 <ul class="container roboto-condensed-HFont" type="none">
@@ -26,5 +28,14 @@
             </div>
         </div>
     </nav>
+    <div class="search-back">
+        <form id="weather-search-form" action="/weather" method="get">
+            <label for="search">
+                <h1>Curious About The Weather? Search your city!</h1>
+                <input type="text" id="search" placeholder="Enter the name of the city" required>
+                <button type="submit">Search</button>
+            </label>
+        </form>              
+    </div>
 </body>
 </html>

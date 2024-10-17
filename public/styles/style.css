@@ -7,7 +7,69 @@
     font-style: normal;
 }
 
-/* Navbar Styling */
+:root{
+    --sunny_color: #f7dc6f;
+    --rainy_color: #698fa1;
+    --windy_color: #63ccff;
+    --cloudy_color: #4093f3;
+    --snowy_color: #c1eff5;
+    --night_color: #2c3e50;
+}
+
+.home-body{
+    background-image: url(/public/images/Sunny.png); 
+    /* here will the the image given by parshva; */
+}
+
+/* Search form */
+.search-back{
+    margin-top: 200px;
+}
+#weather-search-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+#weather-search-form label h1{
+    font-weight: bold;
+}
+
+#weather-search-form input[type="text"] {
+    width: 300px; 
+    padding: 10px;
+    font-size: 1rem;
+    border: 2px solid #333;
+    border-radius: 10px;          
+    background-color: #fff;       
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+    outline: none;
+    transition: border 0.3s ease-in-out;
+}
+
+#weather-search-form input[type="text"]:focus {
+    border-color: #6f8af7;    
+}
+
+#weather-search-form button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #6f8af7;   
+    border: none;
+    border-radius: 8px;        
+    cursor: pointer;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2); 
+    transition: background-color 0.3s ease;
+}
+
+
+#weather-search-form button:hover {
+    background-color: #0056b3; 
+}
+
+/* nav bar starts from here */
 nav {
     background-color: #f0f0f0;
     padding: 10px 20px;
