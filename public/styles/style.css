@@ -177,6 +177,9 @@ li img {
     margin: 0;
     padding: 0;
 }
+.description{
+    font-size: 2rem;
+}
 
 .city {
     grid-area: 3 / 1 / 4 / 3; 
@@ -275,6 +278,9 @@ p {
     
     .wind-speed {
         grid-area: 5 / 1 / 6 / 2; 
+    }
+    .description{
+        grid-area: 6/2/7/4;
     }
     
     .max-temp {

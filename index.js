@@ -25,7 +25,7 @@ app.post('/weather', async (req, res) => {
         const weatherData = await weatherResponse.json();
 
        
-        console.log(weatherData);
+        // console.log(weatherData);
 
         if (weatherData.cod === 200) {
             const temperature = weatherData.main.temp;
