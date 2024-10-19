@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Wise</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body id="login-bg">
+    <div id="login-form">
+        <form action="/home">
+            <div id="logo">LOGO</div>
+            <h1 id="welcome">Welcome</h1>
+            <label for="email">
+                Email <br>
+                <input type="email" name="email" id="email" placeholder="Enter your email" required><br>
+            </label>
+            <label for="password">
+                Password <br>
+                <input type="password" name="password" id="password" placeholder="Enter your password" required>
+            </label>
+            <div id="rem-forgot-pass">
+                <label for="remember">
+                    <input type="checkbox" name="remember" id="remember"> Remember me
+                </label>
+                <div id="forgot-pass"><a href="#">Forgot your password?</a></div>
+            </div>
+            <button type="submit" id="login-btn">Login</button>
+            <div id="register">
+                <div id="dark">Don't have an account?</div>
+                <div id="colored"><a href="/register">Register here</a></div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', function(event) {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+    
+            if (!email || !password) {
+                alert("Please fill out both fields.");
+                event.preventDefault();
+                return;
+            }
+    
+    
+            if (password.length < 6) {
+                alert("Password must be at least 6 characters long.");
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Wise</title>
+    <link rel="stylesheet" href="/styles/style.css" />
+  </head>
+  <body class="forum-bg">
+    <nav>
+      <div class="nav-container">
+        <div class="left roboto-condensed-HFont">
+          <a href="#">Weather Wise</a>
+        </div>
+        <div class="tabs" id="navLinks">
+          <ul class="container roboto-condensed-HFont" type="none">
+            <li>
+              <a href="/home"><img src="/images/home-svgrepo-com.svg" />Home</a>
+            </li>
+            <li>
+              <a href="#"
+                ><img src="/images/information-circle-solid-svgrepo-com.svg" />
+                About</a
+              >
+            </li>
+            <li>
+              <a href="/forum"
+                ><img src="/images/discussion-svgrepo-com.svg" />Forum</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="hamburger" id="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <div class="header">
+      <h1>
+        Join the community <br />
+        And ask the questions!
+      </h1>
+      <button id="create-button">Create Post</button>
+    </div>
+
+    <div id="post-modal">
+      <div id="post-modal-content">
+        <span id="close-modal">&times;</span>
+        <h2>Create a Post</h2>
+        <form id="post-form">
+          <label for="title">Title:</label>
+          <input type="text" id="title" name="title" required /><br /><br />
+
+          <label for="description">Description:</label>
+          <input
+            type="text"
+            id="description"
+            name="description"
+            required
+          /><br /><br />
+
+          <label for="content">Content:</label>
+          <textarea id="content" name="content" required></textarea><br /><br />
+
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+    
+    <!-- all the posts go here -->
+    <div class="post-header">
+        <h2>Recent posts</h2>
+        <div class="card">
+            <h3 class="card-title">Title</h3>
+            <h4>Subtitle</h4>
+            <p>content</p>
+            <h5>Username</h5>
+            <h6>10/20/24 12:00 am</h6>
+        </div>
+    </div>
+
+    <script>
+      var modal = document.getElementById("post-modal");
+      var btn = document.getElementById("create-button");
+      var closeBtn = document.getElementById("close-modal");
+      btn.onclick = function () {
+        modal.style.display = "block";
+      };
+
+      closeBtn.onclick = function () {
+        modal.style.display = "none";
+      };
+
+     
+      window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };
+
+      document.getElementById("post-form").onsubmit = function (event) {
+        event.preventDefault(); 
+
+     
+        const title = document.getElementById("title").value;
+        const description = document.getElementById("description").value;
+        const content = document.getElementById("content").value;
+
+
+        console.log({ title, description, content });
+
+    
+        modal.style.display = "none";
+
+        document.getElementById("post-form").reset();
+      };
+    </script>
+  </body>
+</html>

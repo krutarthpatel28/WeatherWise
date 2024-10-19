@@ -230,6 +230,397 @@ p {
     font-size: 3.5rem;
 }
 
+/* Login-page */
+#login-bg {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f4f8;
+    margin: 0;
+    background-image: url('/images/login-background-img.jpg');
+    background-size: cover;
+    background-position: center;
+    font-family: 'DINNextLTPro-Condensed', Helvetica, sans-serif;
+}
+
+#login-form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 10px 10px 80px 20px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    padding: 50px;
+    width: 300px;
+    z-index: 1;
+}
+
+label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+#email, #password {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    
+}
+.label-header{
+    margin: 0px;
+}
+#email:focus, #password:focus {
+    border-color: orange;
+    outline: none;
+}
+
+#welcome {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+#rem-forgot-pass {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+}
+
+#forgot-pass a {
+    font-size: 12px;
+    color: orange;
+    text-decoration: none;
+}
+
+#forgot-pass a:hover {
+    text-decoration: underline;
+}
+
+#login-btn {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: orange;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#login-btn:hover {
+    background-color: #db7806;
+}
+
+#rem-forgot-pass label {
+    font-weight: 100;
+    font-size: 20px;
+}
+
+#register {
+    margin-top: 15px;
+    font-size: 20px;
+}
+
+#dark {
+    color: #555;
+}
+
+#colored a {
+    color: orange;
+    text-decoration: underline 2px;
+}
+
+#colored a:hover {
+    text-decoration: underline;
+}
+
+/* Register page */
+#register-bg {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f4f8;
+    margin: 0;
+    background-image: url('/images/login-background-img.jpg');
+    background-size: cover;
+    background-position: center;
+    font-family: 'DINNextLTPro-Condensed', Helvetica, sans-serif;
+}
+
+#register-form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 10px 10px 80px 20px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    padding: 50px;
+    width: 300px;
+    z-index: 1;
+}
+
+label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+#name, #email, #password, #confirm-password {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+#name:focus, #email:focus, #password:focus, #confirm-password:focus {
+    border-color: orange;
+    outline: none;
+}
+
+#welcome-register {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+#register-btn {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: orange;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#register-btn:hover {
+    background-color: #db7806;
+}
+
+#login-link {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+#dark-register {
+    color: #555;
+}
+
+#colored-register a {
+    color: orange;
+    text-decoration: underline 2px;
+}
+
+#colored-register a:hover {
+    text-decoration: underline;
+}
+
+
+/* Style for forum  */
+.forum-bg{
+    background-image: url('/images/Forum.png');
+    background-size: cover;
+    font-family: 'DINNextLTPro-Condensed', Helvetica, sans-serif;
+}
+
+/* Header Styles */
+.header {
+    height: 300px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: linear-gradient(to bottom right, #8f6dd1, #cebdef);
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.header h1 {
+    font-size: 4rem;
+    font-weight: bold;
+    text-align: left;
+    margin: 0;
+    line-height: 1.2;
+    color: #ffffff;
+}
+
+/* Create Button Styles */
+#create-button {
+    background-color: #34c759;
+    border: none;
+    height: 50px;
+    width: 150px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+#create-button:hover {
+    background-color: #2eb94a;
+    transform: translateY(-2px);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+#post-modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.4); 
+}
+
+#post-modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    border-radius: 10px; 
+}
+
+#close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+#close-modal:hover,
+#close-modal:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+#post-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; 
+}
+
+#post-form label {
+    font-size: 1.2em;
+    color: #333; 
+    font-weight: bold;
+}
+
+#post-form input[type="text"],
+#post-form textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: border-color 0.3s ease; 
+}
+
+#post-form input[type="text"]:focus,
+#post-form textarea:focus {
+    border-color: #34c759;
+    outline: none; 
+}
+
+#post-form textarea {
+    resize: vertical; 
+    min-height: 100px;
+}
+
+
+#post-form button[type="submit"] {
+    background-color: #34c759; 
+    border: none;
+    height: 50px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer; 
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+#post-form button[type="submit"]:hover {
+    background-color: #2eb94a; 
+    transform: translateY(-2px);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* Card Styles */
+.card {
+    background-color: #fff; 
+    border-radius: 15px; 
+    padding: 20px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); 
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+    border: 1px solid #f0f0f0; 
+    margin: 20px 0; 
+}
+
+.card:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); 
+}
+
+.card-title {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #333; 
+    margin-bottom: 10px; 
+}
+
+.card h4 {
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.card p {
+    font-size: 1em;
+    color: #444; 
+    line-height: 1.5; 
+    margin-bottom: 15px;
+}
+
+
+.card h5 {
+    font-size: 1em;
+    color: #888; 
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.card h6 {
+    font-size: 0.9em;
+    color: #aaa; 
+    font-weight: normal;
+}
+.post-header{
+    padding: 20px;
+}
+
+.post-header h2 {
+    font-size: 2em;
+    font-weight: bold;
+    color: #333;
+    text-decoration: underline 3px;
+    margin-bottom: 20px;
+}
+
 @media (max-width: 1200px) {
     .temperature {
         font-size: 12rem; 
@@ -314,6 +705,7 @@ p {
     }
     
 }
+
 
 @media (max-width: 576px) {
     .temperature {

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Wise</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body id="register-bg">
+    <div id="register-form">
+        <form action="post">
+            <div id="logo">LOGO</div>
+            <h1 id="welcome-register">Register</h1>
+            <label for="name">
+                Name <br>
+                <input type="text" name="name" id="name" placeholder="Enter your name" required><br>
+            </label>
+            <label for="email">
+                Email <br>
+                <input type="email" name="email" id="email" placeholder="Enter your email" required><br>
+            </label>
+            <label for="password">
+                Password <br>
+                <input type="password" name="password" id="password" placeholder="Enter your password" required>
+            </label>
+            <label for="confirm-password">
+                Confirm Password <br>
+                <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm your password" required>
+            </label>
+            <button type="submit" id="register-btn">Register</button>
+            <div id="login-link">
+                <div id="dark-register">Already have an account?</div>
+                <div id="colored-register"><a href="/">Login here</a></div>
+            </div>
+        </form>
+    </div>
+    <script>
+        document.querySelector('form').addEventListener('submit', function(event) {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+    
+            if (!name || !email || !password || !confirmPassword) {
+                alert("All fields are required.");
+                event.preventDefault(); 
+                return;
+            }
+    
+            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            if (!emailPattern.test(email)) {
+                alert("Please enter a valid email address.");
+                event.preventDefault();
+                return;
+            }
+    
+            if (password.length < 6) {
+                alert("Password must be at least 6 characters long.");
+                event.preventDefault();
+                return;
+            }
+    
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+                event.preventDefault();
+            }
+        });
+    </script>
+    
+</body>
+</html>

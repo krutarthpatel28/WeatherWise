@@ -11,21 +11,33 @@ app.set('view engine', 'ejs');
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Render the login page
 app.get("/", (req, res) => {
-    res.render("home");
+    res.render("login");
 });
 
+app.get("/register", (req, res) => {
+    res.render("register");
+});
+
+
+// Post route to handle login validation
+app.get('/home', (req,res)=>{
+    res.render('home');
+});
+
+app.get('/forum', (req,res)=>{
+    res.render('forum')
+});
+
+// Render the weather page after the user logs in
 app.post('/weather', async (req, res) => {
     const city = req.body.city;
     const country = 'in';  // Assuming you're working with Indian cities
 
     try {
-        
         const weatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${API_KEY}&units=metric`);
         const weatherData = await weatherResponse.json();
-
-       
-        // console.log(weatherData);
 
         if (weatherData.cod === 200) {
             const temperature = weatherData.main.temp;
