@@ -1,9 +1,8 @@
 import express from "express";
-import User from "../models/User";
-import bcrypt from "bcryptjs";
+import User from "../models/User.js";
 import jwt from "jsonwebtoken";
-import { Router } from "express";
-const router = Router();
+
+const router = express.Router();
 
 // Login Route
 router.post("/login", async (req, res) => {
@@ -17,7 +16,7 @@ router.post("/login", async (req, res) => {
     if (!user) {
       return res.status(400).json({ message: "Invalid email or password." });
     }
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await user.matchPassword(password);
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid email or password." });
     }
@@ -25,11 +24,13 @@ router.post("/login", async (req, res) => {
       expiresIn: "1h",
     });
     res.cookie("token", token, { httpOnly: true });
-    res.status(200).json({ message: "Login successful", token });
+    
+    // Instead of sending JSON, redirect to the home page
+    return res.redirect('/home');
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server error" });
+    console.error("Login error:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 
-module.exports = router;
+export default router;

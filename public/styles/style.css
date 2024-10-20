@@ -430,6 +430,7 @@ label {
 .forum-bg{
     background-image: url('/images/Forum.png');
     background-size: cover;
+    background-repeat: repeat-y;
     font-family: 'DINNextLTPro-Condensed', Helvetica, sans-serif;
 }
 
@@ -621,6 +622,101 @@ label {
     margin-bottom: 20px;
 }
 
+/* Style for about section */
+.about-bg{
+    background-image: url('/images/About.png');
+    background-size: cover;
+    background-repeat: repeat-y;
+    
+}
+
+#aboutus-head h2,
+#ourstory-head h2,
+#ourfounder-head h2,
+#ourfocus-head h2,
+#ourjourney-head h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Paragraphs */
+#aboutus-body p,
+#ourstory-body p,
+#ourfocus-body p,
+#ourjourney-body p {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 30px;
+    text-align: justify;
+}
+
+/* List items for founders */
+#ourfounder-body ul {
+    list-style: none;
+    padding: 0;
+}
+
+#ourfounder-body ul li {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.6;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+#ourfounder-body ul li:last-child {
+    border-bottom: none;
+}
+
+#first,
+#second,
+#third,
+#fourth,
+#fifth {
+    max-width: 1000px;
+    margin: 40px auto;
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+
+#first:hover,
+#second:hover,
+#third:hover,
+#fourth:hover,
+#fifth:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+#ourfocus-body ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+#ourfocus-body ul li {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.6;
+    margin: 10px 0;
+}
+
+
+#ourjourney-body p {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.8;
+}
+
+
 @media (max-width: 1200px) {
     .temperature {
         font-size: 12rem; 
@@ -702,6 +798,25 @@ label {
         flex-direction: column;
         align-items: center;
         gap: 5px;
+    }
+    #first,
+    #second,
+    #third,
+    #fourth,
+    #fifth {
+        padding: 20px;
+    }
+
+    #aboutus-head h2,
+    #ourstory-head h2,
+    #ourfounder-head h2,
+    #ourfocus-head h2,
+    #ourjourney-head h2 {
+        font-size: 1.8rem;
+    }
+
+    p, li {
+        font-size: 1rem;
     }
     
 }

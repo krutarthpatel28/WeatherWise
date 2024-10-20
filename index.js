@@ -6,23 +6,21 @@ import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 dotenv.config();
 
 import User from './models/User.js';  
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
 
 app.set('view engine', 'ejs');
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-
-// Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log('MongoDB connected'))
-    .catch((err) => console.log('MongoDB connection error:', err));
-
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -39,6 +37,21 @@ const userVerification = (req, res, next) => {
     } catch (error) {
         return res.status(403).json({ message: "Invalid token." });
     }
+};
+
+// Connect to MongoDB
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 5000 // Timeout after 5s instead of 30s
+    });
+    console.log(`MongoDB Connected: ${mongoose.connection.host}`);
+  } catch (error) {
+    console.error(`Error: ${error.message}`);
+    process.exit(1);
+  }
 };
 
 // Routes
@@ -66,7 +79,9 @@ app.post("/register", async (req, res) => {
         if (existingUser) {
             return res.status(400).json({ message: "User already exists." });
         }
+        
         const hashedPassword = await bcrypt.hash(password, 10);
+        
         const newUser = new User({
             name,
             email,
@@ -74,8 +89,6 @@ app.post("/register", async (req, res) => {
         });
         await newUser.save();
         
-        // Log the created user for verification
-        console.log("New user created:", newUser);
         res.status(201).redirect('/');
     } catch (error) {
         console.error("Registration error:", error);
@@ -86,42 +99,39 @@ app.post("/register", async (req, res) => {
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
-    // Check if email and password are provided
     if (!email || !password) {
         return res.status(400).json({ message: "Please provide email and password." });
     }
 
     try {
         const user = await User.findOne({ email });
-        console.log("User found:", user); 
+        console.log("User found:", user ? "Yes" : "No");
+        
         if (!user) {
-            return res.status(400).json({ message: "Invalid email or password." });
+            return res.status(400).json({ message: "User not found." });
         }
+        
         const isMatch = await bcrypt.compare(password, user.password);
-        console.log("Password from login form:", password);
-        console.log("Hashed password from database:", user.password);
         console.log("Password match:", isMatch);
 
         if (!isMatch) {
-            return res.status(400).json({ message: "Invalid email or password." });
+            return res.status(400).json({ message: "Invalid password." });
         }
 
-        // Create JWT token and set it in cookies
         const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '1h' });
         res.cookie('token', token, { httpOnly: true });
-        res.status(200).redirect('/home');
+        return res.status(200).json({ message: "Login successful", redirectUrl: '/home' });
     } catch (error) {
         console.error("Error during login:", error);
-        res.status(500).json({ message: "Server error" });
+        res.status(500).json({ message: "Server error", error: error.message });
     }
 });
 
-app.get("/home", userVerification, (req, res) => {
+app.get("/home", (req, res) => {
     res.render("home", { user: req.user }); 
 });
-
 // Weather route
-app.post('/weather', userVerification, async (req, res) => {
+app.post('/weather',async (req, res) => {
     const city = req.body.city;
     const country = 'in';  // Assuming you're working with Indian cities
     const API_KEY = process.env.API_KEY;
@@ -155,14 +165,17 @@ app.post('/weather', userVerification, async (req, res) => {
             res.render('index', { error: "Could not fetch weather data for the city.", city });
         }
     } catch (error) {
-        console.error(error);
+        console.error("Weather fetching error:", error);
         res.render('index', { error: "An error occurred while fetching data.", city });
     }
 });
 
-// Forum route
-app.get('/forum', userVerification, (req, res) => {
+app.get('/forum', (req, res) => {
     res.render('forum');
+});
+
+app.get('/about',(req,res)=>{
+    res.render('about');
 });
 
 // Logout route
@@ -171,7 +184,11 @@ app.get('/logout', (req, res) => {
     res.redirect('/');
 });
 
-// Start server
-app.listen(3000, () => {
-    console.log("Server's up and running on port 3000");
+connectDB().then(() => {
+    app.listen(3000, () => {
+        console.log("Server's up and running on port 3000");
+    });
+}).catch(err => {
+    console.error("Failed to connect to MongoDB", err);
+    process.exit(1);
 });

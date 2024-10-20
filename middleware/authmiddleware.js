@@ -15,4 +15,4 @@ const userVerification = (req, res, next) => {
     }
 };
 
-module.exports = { userVerification };
+export { userVerification };
