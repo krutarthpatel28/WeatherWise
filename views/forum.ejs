@@ -10,7 +10,7 @@
     <nav>
       <div class="nav-container">
         <div class="left roboto-condensed-HFont">
-          <a href="/home">Weather Wise</a>
+          <a href="/home"><img id="logo-nav" src="/images/main-logo.png" /></a>
         </div>
         <div class="tabs" id="navLinks">
           <ul class="container roboto-condensed-HFont" type="none">
@@ -27,6 +27,9 @@
               <a href="/forum"
                 ><img src="/images/discussion-svgrepo-com.svg" />Forum</a
               >
+            </li>
+            <li>
+              <a href="/logout"><img src="/images/logout-svgrepo-com.svg">Logout</a>
             </li>
           </ul>
         </div>
@@ -73,8 +76,7 @@
     <!-- all the posts go here -->
     <div class="post-header">
       <h2>Recent posts</h2>
-      <div class="post-header">
-        <h2>Recent posts</h2>
+      <% if(posts && posts.length > 0) { %>
         <% posts.forEach(post => { %>
             <div class="card">
                 <h3 class="card-title"><%= post.title %></h3>
@@ -84,14 +86,16 @@
                 <h6><%= new Date(post.createdAt).toLocaleString() %></h6>
             </div>
         <% }); %>
-    </div>
-    
+      <% } else { %>
+        <h1>Be the first one to post!</h1>
+      <% } %> 
     </div>
 
     <script>
       var modal = document.getElementById("post-modal");
       var btn = document.getElementById("create-button");
       var closeBtn = document.getElementById("close-modal");
+
       btn.onclick = function () {
         modal.style.display = "block";
       };
@@ -104,20 +108,6 @@
         if (event.target == modal) {
           modal.style.display = "none";
         }
-      };
-
-      document.getElementById("post-form").onsubmit = function (event) {
-        event.preventDefault();
-
-        const title = document.getElementById("title").value;
-        const description = document.getElementById("description").value;
-        const content = document.getElementById("content").value;
-
-        console.log({ title, description, content });
-
-        modal.style.display = "none";
-
-        document.getElementById("post-form").reset();
       };
     </script>
   </body>

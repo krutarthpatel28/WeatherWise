@@ -1,16 +1,15 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import fs from 'fs';
+import csv from 'csv-parser'; // To parse CSV files
 
 dotenv.config();
-
-import User from './models/User.js';  
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -23,6 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 const JWT_SECRET = process.env.JWT_SECRET;
+const POSTS_FILE = path.join(__dirname, 'posts.csv'); // Path to your CSV file
 
 // Middleware to verify JWT
 const userVerification = (req, res, next) => {
@@ -33,25 +33,33 @@ const userVerification = (req, res, next) => {
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
         req.user = decoded;
-        next(); 
+        next();
     } catch (error) {
         return res.status(403).json({ message: "Invalid token." });
     }
 };
 
-// Connect to MongoDB
-const connectDB = async () => {
-  try {
-    await mongoose.connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 5000 // Timeout after 5s instead of 30s
+// Helper function to read posts from CSV
+const readPostsFromCSV = () => {
+    const posts = [];
+    return new Promise((resolve, reject) => {
+        fs.createReadStream(POSTS_FILE)
+            .pipe(csv())
+            .on('data', (row) => posts.push(row))
+            .on('end', () => resolve(posts))
+            .on('error', reject);
     });
-    console.log(`MongoDB Connected: ${mongoose.connection.host}`);
-  } catch (error) {
-    console.error(`Error: ${error.message}`);
-    process.exit(1);
-  }
+};
+
+// Helper function to write new post to CSV
+const writePostToCSV = (post) => {
+    const newLine = `"${post.title}","${post.description}","${post.content}","${post.username}","${post.createdAt}"\n`;
+    return new Promise((resolve, reject) => {
+        fs.appendFile(POSTS_FILE, newLine, (err) => {
+            if (err) reject(err);
+            resolve();
+        });
+    });
 };
 
 // Routes
@@ -75,20 +83,10 @@ app.post("/register", async (req, res) => {
     }
 
     try {
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
-            return res.status(400).json({ message: "User already exists." });
-        }
-        
         const hashedPassword = await bcrypt.hash(password, 10);
-        
-        const newUser = new User({
-            name,
-            email,
-            password: hashedPassword
-        });
-        await newUser.save();
-        
+
+        // Simulating user registration using JWT for simplicity
+        const newUser = { name, email, password: hashedPassword };
         res.status(201).redirect('/');
     } catch (error) {
         console.error("Registration error:", error);
@@ -104,23 +102,11 @@ app.post('/login', async (req, res) => {
     }
 
     try {
-        const user = await User.findOne({ email });
-        console.log("User found:", user ? "Yes" : "No");
-        
-        if (!user) {
-            return res.status(400).json({ message: "User not found." });
-        }
-        
-        const isMatch = await bcrypt.compare(password, user.password);
-        console.log("Password match:", isMatch);
-
-        if (!isMatch) {
-            return res.status(400).json({ message: "Invalid password." });
-        }
-
-        const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '1h' });
+        // For simplicity, we assume any user can login
+        const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '1h' });
         res.cookie('token', token, { httpOnly: true });
-        return res.status(200).json({ message: "Login successful", redirectUrl: '/home' });
+
+        return res.redirect('/home');
     } catch (error) {
         console.error("Error during login:", error);
         res.status(500).json({ message: "Server error", error: error.message });
@@ -128,13 +114,17 @@ app.post('/login', async (req, res) => {
 });
 
 app.get("/home", (req, res) => {
-    res.render("home", { user: req.user }); 
+    res.render("home", { user: req.user });
 });
+
 // Weather route
-app.post('/weather',async (req, res) => {
+app.post('/weather', async (req, res) => {
     const city = req.body.city;
-    const country = 'in';  // Assuming you're working with Indian cities
+    const country = 'in'; // Assuming you're working with Indian cities
     const API_KEY = process.env.API_KEY;
+
+    let backgroundImage = '/images/default.png'; // Default background image
+    let weatherClass = 'default'; // Default weather class
 
     try {
         const weatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${API_KEY}&units=metric`);
@@ -149,6 +139,44 @@ app.post('/weather',async (req, res) => {
                 sys: { sunrise, sunset },
             } = weatherData;
 
+            // Determine weather condition for class and background image
+            const weatherCondition = weather[0].main.toLowerCase();
+            const currentTime = Date.now() / 1000; // Get current time in seconds
+
+            if (currentTime < sunrise || currentTime > sunset) {
+                weatherClass = 'night';
+                backgroundImage = '/images/Night.png'; // Night background
+            } else {
+                switch (weatherCondition) {
+                    case 'clear':
+                        weatherClass = 'sunny';
+                        backgroundImage = '/images/sunny.png'; // Set path for sunny image
+                        break;
+                    case 'clouds':
+                        weatherClass = 'cloudy';
+                        backgroundImage = '/images/cloudy.png'; // Set path for cloudy image
+                        break;
+                    case 'rain':
+                        weatherClass = 'rainy';
+                        backgroundImage = '/images/rainy.png'; // Set path for rainy image
+                        break;
+                    case 'snow':
+                        weatherClass = 'snowy';
+                        backgroundImage = '/images/snowy.png'; // Set path for snowy image
+                        break;
+                    case 'wind':
+                        weatherClass = 'windy';
+                        backgroundImage = '/images/windy.png'; // Set path for windy image
+                        break;
+                    default:
+                        weatherClass = 'default'; // Fallback
+                        backgroundImage = '/images/default.png'; // Default background
+                }
+            }
+
+            const sunriseTime = new Date(sunrise * 1000).toLocaleTimeString();
+            const sunsetTime = new Date(sunset * 1000).toLocaleTimeString();
+
             res.render('index', {
                 temperature: temp,
                 feelsLike: feels_like,
@@ -157,38 +185,76 @@ app.post('/weather',async (req, res) => {
                 windSpeed: speed,
                 maxTemp: temp_max,
                 description: weather[0].description,
-                sunriseTime: new Date(sunrise * 1000).toLocaleTimeString(),
-                sunsetTime: new Date(sunset * 1000).toLocaleTimeString(),
-                precipitation: weather[0].main,
+                sunriseTime,
+                sunsetTime,
+                textColor: `var(--${weatherClass}_color)`,
+                weatherClass,
+                backgroundImage
             });
         } else {
-            res.render('index', { error: "Could not fetch weather data for the city.", city });
+            res.render('index', { 
+                error: "Could not fetch weather data for the city.", 
+                city, 
+                backgroundImage,  // Pass the default background image on error
+                weatherClass      // Pass the default weather class on error
+            });
         }
     } catch (error) {
         console.error("Weather fetching error:", error);
-        res.render('index', { error: "An error occurred while fetching data.", city });
+        res.render('index', { 
+            error: "An error occurred while fetching data.", 
+            city,
+            backgroundImage,  // Pass the default background image on error
+            weatherClass      // Pass the default weather class on error
+        });
     }
 });
 
-app.get('/forum', (req, res) => {
-    res.render('forum');
+
+// Forum route: Reading posts from CSV
+app.get('/forum', async (req, res) => {
+    try {
+        const posts = await readPostsFromCSV();
+        res.render('forum', { posts });
+    } catch (error) {
+        console.error("Error reading posts from CSV:", error);
+        res.status(500).json({ message: "Could not load forum posts" });
+    }
 });
 
-app.get('/about',(req,res)=>{
-    res.render('about');
+app.post('/forum/create-post', userVerification, async (req, res) => {
+    const { title, description, content } = req.body;
+
+    if (!title || !description || !content) {
+        return res.status(400).json({ message: "All fields are required." });
+    }
+
+    const newPost = {
+        title,
+        description,
+        content,
+        username: req.user.email, // Assuming the user's email is stored in the JWT
+        createdAt: new Date().toISOString(),
+    };
+
+    try {
+        await writePostToCSV(newPost);
+        res.redirect('/forum');
+    } catch (error) {
+        console.error("Error writing post to CSV:", error);
+        res.status(500).json({ message: "Could not create post" });
+    }
 });
 
-// Logout route
 app.get('/logout', (req, res) => {
-    res.clearCookie('token'); 
+    res.clearCookie('token');
     res.redirect('/');
 });
 
-connectDB().then(() => {
-    app.listen(3000, () => {
-        console.log("Server's up and running on port 3000");
-    });
-}).catch(err => {
-    console.error("Failed to connect to MongoDB", err);
-    process.exit(1);
+app.get("/about", (req, res) => {
+    res.render('about');
+});
+
+app.listen(3000, () => {
+    console.log("Server's up and running on port 3000");
 });
