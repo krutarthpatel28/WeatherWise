@@ -50,7 +50,7 @@
       <div id="post-modal-content">
         <span id="close-modal">&times;</span>
         <h2>Create a Post</h2>
-        <form id="post-form">
+        <form id="post-form" action="/forum/create-post" method="POST">
           <label for="title">Title:</label>
           <input type="text" id="title" name="title" required /><br /><br />
 
@@ -69,17 +69,23 @@
         </form>
       </div>
     </div>
-    
+
     <!-- all the posts go here -->
     <div class="post-header">
+      <h2>Recent posts</h2>
+      <div class="post-header">
         <h2>Recent posts</h2>
-        <div class="card">
-            <h3 class="card-title">Title</h3>
-            <h4>Subtitle</h4>
-            <p>content</p>
-            <h5>Username</h5>
-            <h6>10/20/24 12:00 am</h6>
-        </div>
+        <% posts.forEach(post => { %>
+            <div class="card">
+                <h3 class="card-title"><%= post.title %></h3>
+                <h4><%= post.description %></h4>
+                <p><%= post.content %></p>
+                <h5><%= post.username %></h5>
+                <h6><%= new Date(post.createdAt).toLocaleString() %></h6>
+            </div>
+        <% }); %>
+    </div>
+    
     </div>
 
     <script>
@@ -94,7 +100,6 @@
         modal.style.display = "none";
       };
 
-     
       window.onclick = function (event) {
         if (event.target == modal) {
           modal.style.display = "none";
@@ -102,17 +107,14 @@
       };
 
       document.getElementById("post-form").onsubmit = function (event) {
-        event.preventDefault(); 
+        event.preventDefault();
 
-     
         const title = document.getElementById("title").value;
         const description = document.getElementById("description").value;
         const content = document.getElementById("content").value;
 
-
         console.log({ title, description, content });
 
-    
         modal.style.display = "none";
 
         document.getElementById("post-form").reset();
