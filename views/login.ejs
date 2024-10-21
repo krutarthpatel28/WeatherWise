@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Wise</title>
+    <link rel="icon" type="image/x-icon" href="/images/Head.ico">
     <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body id="login-bg">
     <div id="login-form">
         <form action="/login" method="post">
-            <div id="logo">Wather Wise</div>
+            <img id="logo-nav" src="/images/main-logo.svg"/>
             <h1 id="welcome">Welcome</h1>
             <label for="email">
                 Email <br>
@@ -31,12 +32,14 @@
                 <div id="colored"><a href="/register">Register here</a></div>
             </div>
         </form>
+        <div id="error-message"></div>
     </div>
 
     <script>
         document.querySelector('form').addEventListener('submit', function(event) {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
+            // console.log(password)
     
             if (!email || !password) {
                 alert("Please fill out both fields.");

@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Wise</title>
+    <link rel="icon" type="image/x-icon" href="/images/Head.ico">
+
     <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body id="register-bg">
     <div id="register-form">
         <form action="/register" method="post">
-            <div id="logo">LOGO</div>
+            <img id="logo-nav" src="/images/main-logo.svg"/>
             <h1 id="welcome-register">Register</h1>
             <label for="name">
                 Name <br>
@@ -60,7 +62,6 @@
                 return;
             }
     
-
             if (password !== confirmPassword) {
                 alert("Passwords do not match.");
                 event.preventDefault();

@@ -21,32 +21,15 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-// Password hashing middleware
 userSchema.pre('save', async function(next) {
     if (!this.isModified('password')) return next();
-    
-    try {
-        this.password = await bcrypt.hash(this.password, 10);
-    } catch (err) {
-        console.error("Error hashing password:", err);
-        next(err);
-    }
+    this.password = await bcrypt.hash(this.password, 10);
     next();
 });
 
-// Method to match the entered password with the stored hashed password
-userSchema.methods.matchPassword = async function(enteredPassword) {
-    try {
-        const isMatch = await bcrypt.compare(enteredPassword, this.password);
-        if (!isMatch) {
-            console.log('Password mismatch');
-        }
-        return isMatch;
-    } catch (err) {
-        console.error("Error comparing passwords:", err);
-        throw err;
-    }
-};
+// userSchema.methods.matchPassword = async function(enteredPassword) {
+//     return await bcrypt.compare(enteredPassword, this.password);
+// };
 
 const User = mongoose.model('User', userSchema);
 

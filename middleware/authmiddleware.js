@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-const userVerification = (req, res, next) => {
+const userAuthVerification = (req, res, next) => {
     const token = req.cookies.token;
     if (!token) {
         return res.redirect('/');
@@ -15,4 +15,4 @@ const userVerification = (req, res, next) => {
     }
 };
 
-export { userVerification };
+export { userAuthVerification };

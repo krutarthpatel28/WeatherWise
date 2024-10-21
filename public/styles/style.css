@@ -9,12 +9,12 @@
 
 
 :root{
-    --sunny_color: #f7986f;
-    --rainy_color: #32464f;
-    --windy_color: #0079b4;
-    --cloudy_color: #083e7c;
-    --snowy_color: #23c3d8;
-    --night_color: #5e8ca1;
+    --sunny_color: #f7dc6f;
+    --rainy_color: #698fa1;
+    --windy_color: #63ccff;
+    --cloudy_color: #4093f3;
+    --snowy_color: #c1eff5;
+    --night_color: #2c3e50;
 }
 .sunny {
     color: #f7986f !important;
@@ -98,10 +98,6 @@ html, body {
     margin: 0;
     padding: 0;
     height: 100%;             
-}
-
-#logo-nav{
-    height: 150px;
 }
 
 body {
@@ -261,7 +257,7 @@ p {
     height: 100vh;
     background-color: #f0f4f8;
     margin: 0;
-    background-image: url('/images/login-background-img.jpg');
+    background-image: url('/images/login-bg.png');
     background-size: cover;
     background-position: center;
     font-family: 'DINNextLTPro-Condensed', Helvetica, sans-serif;
@@ -371,7 +367,7 @@ label {
     height: 100vh;
     background-color: #f0f4f8;
     margin: 0;
-    background-image: url('/images/login-background-img.jpg');
+    background-image: url('/images/login-bg.png');
     background-size: cover;
     background-position: center;
     font-family: 'DINNextLTPro-Condensed', Helvetica, sans-serif;
