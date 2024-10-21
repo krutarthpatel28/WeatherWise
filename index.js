@@ -194,11 +194,11 @@ app.post('/login', async (req, res) => {
     // }
 });
 
-app.get("/home", (req, res) => {
+app.get("/home",userVerification, (req, res) => {
     res.render("home", { user: req.user }); 
 });
 // Weather route
-app.post("/weather", async (req, res) => {
+app.post("/weather",userVerification, async (req, res) => {
   const city = req.body.city;
   const country = "in"; // Assuming you're working with Indian cities
   const API_KEY = process.env.API_KEY;
@@ -311,7 +311,7 @@ app.post("/weather", async (req, res) => {
   }
 });
 
-app.get('/forum', async (req, res) => {
+app.get('/forum',userVerification, async (req, res) => {
     try {
         const posts = await readPostsFromCSV();
         res.render('forum', { posts });
@@ -356,12 +356,12 @@ app.post('/forum/create-post', userVerification, async (req, res) => {
     }
 });
 
-app.get('/about',(req,res)=>{
+app.get('/about',userVerification, (req,res)=>{
     res.render('about');
 });
 
 // Logout route
-app.get('/logout', (req, res) => {
+app.get('/logout',userVerification, (req, res) => {
     res.clearCookie('token'); 
     res.redirect('/');
 });
