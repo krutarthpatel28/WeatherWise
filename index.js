@@ -165,7 +165,7 @@ app.post("/weather", async (req, res) => {
             "few clouds",
             "scattered clouds",
             "broken clouds",
-            "overcast clouds",
+            "overcast clouds",'mist',
           ].includes(weatherCondition):
             weatherClass = "cloudy";
             backgroundImage = "/images/cloudy.png"; // Set path for cloudy image
